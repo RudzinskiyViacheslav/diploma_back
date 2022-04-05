@@ -1,0 +1,23 @@
+{
+  "name": "diploma",
+  "version": "1.0.0",
+  "description": "My bachelor diploma",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RudzinskiyViacheslav/diploma.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RudzinskiyViacheslav/diploma/issues"
+  },
+  "homepage": "https://github.com/RudzinskiyViacheslav/diploma#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
+  }
+}

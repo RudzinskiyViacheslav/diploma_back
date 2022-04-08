@@ -1,38 +1,32 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
+const port = 3000;
 
-import {requests} from './src/repository/requests.js'
+import { establishPSQLConnection } from './framework/database/psql/connection.js'
+import { Handlers } from './src/handlers/handlers.js'
 
-const pg = require('pg')
+const conn = establishPSQLConnection()
+
+let handlers = new Handlers(conn)
 
 // Пока оставлю для проверки сервера
-app.get('/', (req, res) => {
-    console.log(req)
-    res.send(`Ohh shit, it really works! ${req}`)
-})
+app.get("/", (req, res) => {
+  console.log(req);
+  res.send(`Ohh shit, it really works! ${req}`);
+});
 
-app.get('/main',  requests.mainsc) //Main screen
+app.get("/main", handlers.mainsc); 
 
-app.get('/register',  requests.register) //Registration
+// app.get('/register',  register) //Registration
 
-app.get('/capfk',  requests.capfk) //Screen with all CAPFK
+// app.get('/capfk',  capfk) //Screen with all CAPFK
 
-app.get('/capfk/prod_cards',  requests.prod_cards) //Screen with all production cards
+// app.get('/capfk/prod_cards',  prod_cards) //Screen with all production cards
 
-app.get('/capfk/prod_cards/card',  requests.card) //Production card screen
+// app.get('/capfk/prod_cards/card',  card) //Production card screen
 
-app.get('/info',  requests.info) //Information screen (after main screen)
+// app.get('/info',  info) //Information screen (after main screen)
 
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'monarch',
-  host: 'localhost',
-  database: 'diploma',
-  password: 'helpbycrbq',
-  port: 5432,
-})
-
- app.listen(port, () => {
-   console.log(`Example app listening on port ${port}`)
- })
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

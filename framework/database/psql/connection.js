@@ -1,5 +1,7 @@
+import pkg from "pg";
+const { Pool } = pkg
+
 function establishPSQLConnection() {
-  const Pool = require("pg").Pool;
 
   const pool = new Pool({
     user: "monarch",

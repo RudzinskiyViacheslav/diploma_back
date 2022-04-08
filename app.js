@@ -1,9 +1,11 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+import express from 'express';
 
 import { establishPSQLConnection } from './framework/database/psql/connection.js'
 import { Handlers } from './src/handlers/handlers.js'
+
+const app = express();
+const port = 3000;
+
 
 const conn = establishPSQLConnection()
 

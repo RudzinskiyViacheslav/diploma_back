@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_DB: 'diploma'
+      POSTGRES_USER: 'monarch'
+      POSTGRES_PASSWORD: 'helpbycrbq'
+    ports:
+      - "5432:5432"
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"

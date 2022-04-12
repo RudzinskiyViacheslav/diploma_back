@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { establishPSQLConnection } from './framework/database/psql/connection.js'
 import { Handlers } from './src/handlers/handlers.js'
 

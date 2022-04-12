@@ -1,14 +1,20 @@
 import express from 'express';
 import { establishPSQLConnection } from './framework/database/psql/connection.js'
-import { Handlers } from './src/handlers/handlers.js'
+import { CapfkHandlers } from './src/handlers/capfk.js'
+import { ProductionPointHandlers } from './src/handlers/production_point.js';
 
 const app = express();
-const port = 3000;
 
+const port = 3000;
 
 const conn = establishPSQLConnection()
 
-let handlers = new Handlers(conn)
+const apiVersion = 'v1'
+
+
+let capfk = new CapfkHandlers(conn)
+let prodPoint = new ProductionPointHandlers(conn)
+
 
 // Пока оставлю для проверки сервера
 app.get("/", (req, res) => {
@@ -16,17 +22,8 @@ app.get("/", (req, res) => {
   res.send(`Ohh shit, it really works! ${req}`);
 });
 
-app.get("/main", handlers.mainsc); 
-
-// app.get('/register',  register) //Registration
-
-// app.get('/capfk',  capfk) //Screen with all CAPFK
-
-// app.get('/capfk/prod_cards',  prod_cards) //Screen with all production cards
-
-// app.get('/capfk/prod_cards/card',  card) //Production card screen
-
-// app.get('/info',  info) //Information screen (after main screen)
+app.get(`/api/${apiVersion}/capfk`, capfk.handler);
+app.get(`/api/${apiVersion}/production_point`, prodPoint.handler)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

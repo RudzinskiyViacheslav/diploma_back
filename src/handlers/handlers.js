@@ -7,7 +7,7 @@ class Handlers {
    * Получаем обработка запроса на главную страницу
   */
   mainsc = (request, response) => {
-    this.pool.query("SELECT * FROM pakrmk", (error, results) => {
+    this.pool.query("SELECT * FROM capfk", (error, results) => {
       if (error) {
         throw error;
       }
@@ -27,7 +27,7 @@ class Handlers {
 
 
   capfk = (request, response) => {
-    this.pool.query("SELECT * FROM pakrmk", (error, results) => {
+    this.pool.query("SELECT * FROM capfk", (error, results) => {
     if (error) {
       throw error;
       }

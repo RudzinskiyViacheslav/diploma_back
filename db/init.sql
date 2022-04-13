@@ -2,7 +2,7 @@
 
 CREATE UNLOGGED TABLE IF NOT EXISTS Users
 (
-    user_id serial NOT NULL PRIMARY KEY,
+    user_id int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     first_name varchar(20),
     last_name varchar(20),
     middle_name varchar(20),
@@ -17,7 +17,7 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Users
 
 CREATE UNLOGGED TABLE IF NOT EXISTS Capfk
 (
-    capfk_id serial NOT NULL PRIMARY KEY,
+    capfk_id int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     capfk_name varchar(100),
     adress varchar(100),
     station_name varchar(100),
@@ -28,22 +28,24 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Capfk
 
 CREATE  UNLOGGED TABLE IF NOT EXISTS Departments
 (
-    department_id serial NOT NULL PRIMARY KEY,
+    department_id int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     department_adress varchar(100),
     department_number varchar(100),
     department_master varchar(100),
     work_phone varchar(20),
+    department_capfk_id int references capfk(capfk_id) not null,
     equipment_quantity varchar(100)
 );
 
 CREATE UNLOGGED TABLE IF NOT EXISTS Equipment
 (
-    equipment_id     serial NOT NULL PRIMARY KEY,
+    equipment_id     int GENERATED ALWAYS AS IDENTITY NOT NULL PRIMARY KEY,
     equipment_number varchar(100),
     factory_number   varchar(100),
     delivery_date    varchar(20),
     depreciation_period varchar(100),
     equipment_type varchar(20),
+    equipment_department_id int references  departments(department_id) not null,
     price varchar(100)
 );
 

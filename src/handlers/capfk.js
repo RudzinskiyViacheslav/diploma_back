@@ -18,7 +18,7 @@ class CapfkHandlers {
    * @description Запрос на получение всех ЦАПФК с именем из $1
    * @param {String} "$1" - имя для поиска совпадений
   */
-  PSQLAllQuerry = "SELECT * FROM capfk WHERE capfk_name LIKE $1"
+  PSQLAllQuerry = "SELECT * FROM capfk"
   
   /**
    * @description Возвращает все ЦАПФК 
@@ -44,7 +44,7 @@ class CapfkHandlers {
   */
   searchCapfksByName = (pool, name) => {
     let query = new Promise((resolve, reject) => {
-      pool.query(this.PSQLSearchByNameQuerry,[name], (error, results) => {
+      pool.query(this.PSQLSearchByNameQuerry,[`%${name}%`], (error, results) => {
         if (error) {
           reject(error)
         }

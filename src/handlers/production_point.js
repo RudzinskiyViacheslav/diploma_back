@@ -10,7 +10,7 @@ class ProductionPointHandlers {
 
   PSQLSearchByCapfkid = "SELECT * FROM departments WHERE department_capfk_id=$1"
 
-  PSQLSearchByDepartmentId = "SELECT * FROM departmnets WHERE department_id=$1"
+  PSQLSearchByDepartmentId = "SELECT * FROM departments WHERE department_id=$1"
 
   searchProdPointByDepartmentId = (pool,department_id) => {
     let query = new Promise((resolve, reject) => {

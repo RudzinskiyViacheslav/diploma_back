@@ -45,8 +45,8 @@ class ProductionCardHandlers {
     else {response.status(404).json('Параметр поиска не указан')}
   }
 
-  searchByCapfkId = (request, response, equipment_id) => {
-    this.searchcardPointByCardId(this.psqlPool, equipment_id).then(
+  searchByCardId = (request, response, equipment_id) => {
+    this.searchProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
         console.log(result)
         if(result.length!==0) response.status(200).json(result);

@@ -3,7 +3,7 @@ import { request } from "express"
 import { query } from "express"
 import { error } from "webpack-node-externals/utils"
 
-class ProductionPointHandlers {
+class ProductionCardHandlers {
   /**
    * @constructor 
    * @param {psqlConnection} пул подключений к бд PSQL из библиотеки PG
@@ -12,11 +12,11 @@ class ProductionPointHandlers {
     this.psqlPool = psqlConnection
   }
 
-  PSQLSearchByCapfkid = "SELECT * FROM departments WHERE department_capfk_id=$1"
+  PSQLSearchByCardId = "SELECT * FROM equipment WHERE equipment_id=$1"
 
-  PSQLSearchByDepartmentId = "SELECT * FROM departmnets WHERE department_id=$1"
+  PSQLSearchByDepartmentId = "SELECT * FROM equipment WHERE department_id=$1"
 
-  searchProdPointByDepartmentId = (pool,department_id) => {
+  searchProdCardByDepartmentId = (pool,department_id) => {
     let query = new Promise((resolve, reject) => {
       pool.query(this.PSQLSearchByDepartmentId, [department_id], (error, results) => {
         if (error) {
@@ -29,9 +29,9 @@ class ProductionPointHandlers {
     return query
   }
 
-  searchProdPointByCapfkId = (pool, capfk_id) => {
+  searchProdCardByCardId = (pool, equipment_id) => {
     let query = new Promise((resolve, reject) => {
-      pool.query(this.PSQLSearchByCapfkid,[capfk_id], (error, results) => {
+      pool.query(this.PSQLSearchByCardId,[equipment_id], (error, results) => {
         if (error) {
           reject(error)
         }
@@ -43,17 +43,17 @@ class ProductionPointHandlers {
   }
 
   handler = (request, response) => {
-    if (request.query.capfk_id) this.searchByCapfkId(request,response,request.query.capfk_id)
+    if (request.query.equipment_id) this.searchByCardId(request,response,request.query.equipment_id)
     else if (request.query.department_id) this.searchByProdId(request, response, request.query.department_id)
     else {response.status(404).json('Параметр поиска не указан')}
   }
 
-  searchByCapfkId = (request, response, capfk_id) => {
-    this.searchProdPointByCapfkId(this.psqlPool, capfk_id).then(
+  searchByCapfkId = (request, response, equipment_id) => {
+    this.searchcardPointByCardId(this.psqlPool, equipment_id).then(
       (result) => {
         console.log(result)
         if(result.length!==0) response.status(200).json(result);
-        else response.status(404).json(`Производственный участок филиала с id ${capfk_id} не найден`)
+        else response.status(404).json(`Производственная карточка с id ${equipment_id} не найдена`)
       },
       (error) => {
         response.status(500);
@@ -64,11 +64,11 @@ class ProductionPointHandlers {
   };
 
   searchByProdId = (request, response, department_id) => {
-    this.searchProdPointByDepartmentId(this.psqlPool, department_id).then(
+    this.searchProdCardByDepartmentId(this.psqlPool, department_id).then(
       (result) => {
         console.log(result)
         if(result.length!==0) response.status(200).json(result);
-        else response.status(404).json(`Производственный участок с id ${department_id} не найден`)
+        else response.status(404).json(`Производственных карточек производственных участок с id ${department_id} не найдено`)
       },
       (error) => {
         response.status(500);
@@ -79,4 +79,4 @@ class ProductionPointHandlers {
 
 };
 
-export { ProductionPointHandlers }
+export { ProductionCardHandlers }

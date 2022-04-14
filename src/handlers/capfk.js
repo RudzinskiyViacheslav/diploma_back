@@ -37,7 +37,7 @@ class CapfkHandlers {
     return query
   } 
   /**
-   * @description Ищет по заданному пулу ЦАПФК c именем name (строго)
+   * @description Ищет по заданному пулу ЦАПФК c именем name (не строго)
    * @param {pool} пул - пул подлкючений к базе данных PSQL (часть PG)
    * @param {name} имя по которому необходимо найти
    * @returns {Promise} - возвращает промис из которого можно получить result с найденными строками

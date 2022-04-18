@@ -12,6 +12,7 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Users
     employee_id varchar(20),
     passport varchar(20),
     email varchar(50),
+    pass varchar(64),
     position int
 );
 

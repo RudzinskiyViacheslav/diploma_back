@@ -28,13 +28,13 @@ class ProductionCardHandlers {
                     equipment_id = $7
                     RETURNING equipment_id`;
 
-  PSQLSearchByDepartmentId = "SELECT * FROM equipment WHERE department_id=$1";
+  PSQLSearchByDepartmentId = "SELECT * FROM equipment WHERE equipment_department_id=$1";
 
-  searchProdCardByDepartmentId = (pool, department_id) => {
+  searchProdCardByDepartmentId = (pool, equipment_department_id) => {
     let query = new Promise((resolve, reject) => {
       pool.query(
         this.PSQLSearchByDepartmentId,
-        [department_id],
+        [equipment_department_id],
         (error, results) => {
           if (error) {
             reject(error);
@@ -157,8 +157,8 @@ class ProductionCardHandlers {
   handler = (request, response) => {
     if (request.query.equipment_id)
       this.searchByCardId(request, response, request.query.equipment_id);
-    else if (request.query.department_id)
-      this.searchByProdId(request, response, request.query.department_id);
+    else if (request.query.equipment_department_id)
+      this.searchByProdId(request, response, request.query.equipment_department_id);
     else {
       response.status(404).json("Параметр поиска не указан");
     }
@@ -284,8 +284,8 @@ class ProductionCardHandlers {
     );
   };
 
-  searchByCapfkId = (request, response, equipment_id) => {
-    this.searchcardPointByCardId(this.psqlPool, equipment_id).then(
+  searchByCardId = (request, response, equipment_id) => {
+    this.searchProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
         console.log(result);
         if (result.length !== 0) response.status(200).json(result);
@@ -301,8 +301,8 @@ class ProductionCardHandlers {
     );
   };
 
-  searchByProdId = (request, response, department_id) => {
-    this.searchProdCardByDepartmentId(this.psqlPool, department_id).then(
+  searchByProdId = (request, response, equipment_department_id) => {
+    this.searchProdCardByDepartmentId(this.psqlPool, equipment_department_id).then(
       (result) => {
         console.log(result);
         if (result.length !== 0) response.status(200).json(result);
@@ -310,7 +310,7 @@ class ProductionCardHandlers {
           response
             .status(404)
             .json(
-              `Производственных карточек производственных участок с id ${department_id} не найдено`
+              `Производственных карточек производственного участка с id ${equipment_department_id} не найдено`
             );
       },
       (error) => {

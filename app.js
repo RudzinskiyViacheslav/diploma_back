@@ -28,11 +28,11 @@ app.get("/", (req, res) => {
 
 app.get(`/api/${apiVersion}/capfk`, capfk.handler);
 app.get(`/api/${apiVersion}/production_point`, prodPoint.handler);
-app.get(`/api/${apiVersion}/production_card`, prodcard.handler);
+app.get(`/api/${apiVersion}/equipment`, prodcard.handler);
 
-app.delete(`/api/${apiVersion}/production_card/delete`, prodcard.deleteHandler)
-app.post(`/api/${apiVersion}/production_card/create`, prodcard.createHandler)
-app.post(`/api/${apiVersion}/production_card/update`, prodcard.updateHandler)
+app.delete(`/api/${apiVersion}/equipment/delete`, prodcard.deleteHandler)
+app.post(`/api/${apiVersion}/equipment/create`, prodcard.createHandler)
+app.post(`/api/${apiVersion}/equipment/update`, prodcard.updateHandler)
 
 app.post(`/api/${apiVersion}/users/create`, user.createHandler)
 

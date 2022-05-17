@@ -28,7 +28,8 @@ class ProductionCardHandlers {
                     equipment_id = $7
                     RETURNING equipment_id`;
 
-  PSQLSearchByDepartmentId = "SELECT * FROM equipment WHERE equipment_department_id=$1";
+  PSQLSearchByDepartmentId =
+    "SELECT * FROM equipment WHERE equipment_department_id=$1";
 
   searchProdCardByDepartmentId = (pool, equipment_department_id) => {
     let query = new Promise((resolve, reject) => {
@@ -126,7 +127,7 @@ class ProductionCardHandlers {
     price,
     equipment_id
   ) => {
-    console.log(equipment_id)
+    console.log(equipment_id);
     let query = new Promise((resolve, reject) => {
       // console.log(equipment_department_id);
       pool.query(
@@ -158,19 +159,23 @@ class ProductionCardHandlers {
     if (request.query.equipment_id)
       this.searchByCardId(request, response, request.query.equipment_id);
     else if (request.query.equipment_department_id)
-      this.searchByProdId(request, response, request.query.equipment_department_id);
+      this.searchByProdId(
+        request,
+        response,
+        request.query.equipment_department_id
+      );
     else {
       response.status(404).json("Параметр поиска не указан");
     }
   };
 
   deleteHandler = (request, response) => {
-    console.log(request.body.id);
-    this.deleteByCardId(request, response, request.body.id);
+    console.log(request.body.equipment_id);
+    this.deleteByCardId(request, response, request.body.equipment_id);
   };
 
   createHandler = (request, response) => {
-    console.log(request.body);
+    console.log("qewrewqrqwe");
     this.createCardId(
       request,
       response,
@@ -302,7 +307,10 @@ class ProductionCardHandlers {
   };
 
   searchByProdId = (request, response, equipment_department_id) => {
-    this.searchProdCardByDepartmentId(this.psqlPool, equipment_department_id).then(
+    this.searchProdCardByDepartmentId(
+      this.psqlPool,
+      equipment_department_id
+    ).then(
       (result) => {
         console.log(result);
         if (result.length !== 0) response.status(200).json(result);

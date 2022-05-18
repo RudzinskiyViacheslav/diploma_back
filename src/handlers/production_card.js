@@ -31,10 +31,32 @@ class ProductionCardHandlers {
   PSQLSearchByDepartmentId =
     "SELECT * FROM equipment WHERE equipment_department_id=$1";
 
+  PSQLSortByAmort =
+    "SELECT * FROM equipment WHERE equipment_department_id=$1 ORDER BY depreciation_period;";
+
   searchProdCardByDepartmentId = (pool, equipment_department_id) => {
     let query = new Promise((resolve, reject) => {
       pool.query(
         this.PSQLSearchByDepartmentId,
+        [equipment_department_id],
+        (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          if (results) resolve(results.rows);
+          else {
+            resolve([]);
+          }
+        }
+      );
+    });
+    return query;
+  };
+
+  sortProdCardByAmort = (pool, equipment_department_id) => {
+    let query = new Promise((resolve, reject) => {
+      pool.query(
+        this.PSQLSortByAmort,
         [equipment_department_id],
         (error, results) => {
           if (error) {
@@ -169,12 +191,35 @@ class ProductionCardHandlers {
     }
   };
 
+  sortamortHandler = (request, response) => {
+    this.sortamort(request, response, request.query.equipment_department_id);
+  };
+
+  sortamort = (request, response, equipment_department_id) => {
+    this.sortProdCardByAmort(this.psqlPool, equipment_department_id).then(
+      (result) => {
+        // console.log(result);
+        if (result.length !== 0) response.status(200).json(result);
+        else
+          response
+            .status(404)
+            .json(
+              `Производственных карточек производственного участка с id ${equipment_department_id} не найдено`
+            );
+      },
+      (error) => {
+        response.status(500);
+        throw error;
+      }
+    );
+  };
+
   deleteHandler = (request, response) => {
+    // console.log(request.body.equipment_id);
     this.deleteByCardId(request, response, request.body.equipment_id);
   };
 
   createHandler = (request, response) => {
-    console.log("qewrewqrqwe");
     this.createCardId(
       request,
       response,
@@ -291,6 +336,7 @@ class ProductionCardHandlers {
   searchByCardId = (request, response, equipment_id) => {
     this.searchProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
+        console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response

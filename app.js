@@ -27,6 +27,8 @@ app.get("/", (req, res) => {
 });
 
 app.get(`/api/${apiVersion}/capfk`, capfk.handler);
+app.get(`/api/${apiVersion}/capfk_sort`, capfk.sorthandler);
+app.post(`/api/${apiVersion}/capfk_search`, capfk.handler);
 
 app.get(`/api/${apiVersion}/production_point`, prodPoint.handler);
 
@@ -34,9 +36,12 @@ app.get(`/api/${apiVersion}/equipment`, prodcard.handler);
 app.post(`/api/${apiVersion}/equipment/delete`, prodcard.deleteHandler);
 app.post(`/api/${apiVersion}/equipment/create`, prodcard.createHandler);
 app.post(`/api/${apiVersion}/equipment/update`, prodcard.updateHandler);
+app.get(`/api/${apiVersion}/equipment_sort_amort`, prodcard.sortamortHandler);
 
 app.post(`/api/${apiVersion}/users/create`, user.createHandler);
 app.post(`/api/${apiVersion}/login`, user.handler);
+app.post(`/api/${apiVersion}/getcurrentuser`, user.getcurrenthandler);
+app.post(`/api/${apiVersion}/exit`, user.exithandler);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -27,14 +27,16 @@ app.get("/", (req, res) => {
 });
 
 app.get(`/api/${apiVersion}/capfk`, capfk.handler);
-app.get(`/api/${apiVersion}/production_point`, prodPoint.handler);
-app.get(`/api/${apiVersion}/equipment`, prodcard.handler);
 
+app.get(`/api/${apiVersion}/production_point`, prodPoint.handler);
+
+app.get(`/api/${apiVersion}/equipment`, prodcard.handler);
 app.post(`/api/${apiVersion}/equipment/delete`, prodcard.deleteHandler);
 app.post(`/api/${apiVersion}/equipment/create`, prodcard.createHandler);
 app.post(`/api/${apiVersion}/equipment/update`, prodcard.updateHandler);
 
 app.post(`/api/${apiVersion}/users/create`, user.createHandler);
+app.post(`/api/${apiVersion}/login`, user.handler);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -170,7 +170,6 @@ class ProductionCardHandlers {
   };
 
   deleteHandler = (request, response) => {
-    console.log(request.body.equipment_id);
     this.deleteByCardId(request, response, request.body.equipment_id);
   };
 
@@ -292,7 +291,6 @@ class ProductionCardHandlers {
   searchByCardId = (request, response, equipment_id) => {
     this.searchProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
-        console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response

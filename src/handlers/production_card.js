@@ -15,7 +15,9 @@ class ProductionCardHandlers {
   PSQLCreateCard = `INSERT INTO equipment (equipment_number, factory_number, delivery_date,
                     depreciation_period, equipment_type, equipment_department_id, price)
                     VALUES
-                    ($1,$2,$3,$4,$5,$6,$7) RETURNING equipment_id`;
+                    ($1,$2,$3,$4,$5,$6,$7);`;
+  PSQLCreateCard_2 =
+    "UPDATE equipment SET depreciation_end = date(equipment.delivery_date) + int4(equipment.depreciation_period);";
 
   PSQLUpdateCard = `UPDATE equipment SET
                     equipment_number = $1, 
@@ -32,7 +34,7 @@ class ProductionCardHandlers {
     "SELECT * FROM equipment WHERE equipment_department_id=$1";
 
   PSQLSortByAmort =
-    "SELECT * FROM equipment WHERE equipment_department_id=$1 ORDER BY depreciation_period;";
+    "SELECT * FROM equipment WHERE equipment_department_id=$1 ORDER BY depreciation_end;";
 
   searchProdCardByDepartmentId = (pool, equipment_department_id) => {
     let query = new Promise((resolve, reject) => {
@@ -43,8 +45,10 @@ class ProductionCardHandlers {
           if (error) {
             reject(error);
           }
-          if (results) resolve(results.rows);
-          else {
+          if (results) {
+            pool.query(this.PSQLCreateCard_2);
+            resolve(results.rows);
+          } else {
             resolve([]);
           }
         }
@@ -78,8 +82,10 @@ class ProductionCardHandlers {
         if (error) {
           reject(error);
         }
-        if (results) resolve(results.rows);
-        else {
+        if (results) {
+          pool.query(this.PSQLCreateCard_2);
+          resolve(results.rows);
+        } else {
           resolve([]);
         }
       });
@@ -129,8 +135,10 @@ class ProductionCardHandlers {
           if (error) {
             reject(error);
           }
-          if (results) resolve(results.rows);
-          else {
+          if (results) {
+            pool.query(this.PSQLCreateCard_2);
+            resolve(results.rows);
+          } else {
             resolve([]);
           }
         }
@@ -167,8 +175,10 @@ class ProductionCardHandlers {
           if (error) {
             reject(error);
           }
-          if (results) resolve(results.rows);
-          else {
+          if (results) {
+            pool.query(this.PSQLCreateCard_2);
+            resolve(results.rows);
+          } else {
             resolve([]);
           }
         }

@@ -45,7 +45,12 @@ CREATE UNLOGGED TABLE IF NOT EXISTS Equipment
     factory_number   varchar(100),
     delivery_date    varchar(20),
     depreciation_period varchar(100),
+    depreciation_end varchar(100),
     equipment_type varchar(20),
     equipment_department_id int references  departments(department_id) not null,
     price varchar(100)
 );
+
+-- SELECT * FROM capfk ORDER BY departments_quantity ASC;
+
+-- SELECT * FROM equipment WHERE equipment_department_id=1 ORDER BY price;

@@ -190,11 +190,10 @@ class UserHandlers {
   };
 
   searchUser = (request, response, email, password) => {
-    console.log("ewrwqerwerqwerewq");
     this.searchUserByLogin(this.psqlPool, email, password).then(
       (result) => {
         if (result.length !== 0) {
-          console.log(request.cookies);
+          // console.log(request.cookies);
           let cookie = request.cookies;
           if (cookie == undefined) {
             // let randomNumber = Math.random().toString();

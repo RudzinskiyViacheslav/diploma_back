@@ -78,7 +78,7 @@ class ProductionPointHandlers {
   searchByProdId = (request, response, department_id) => {
     this.searchProdPointByDepartmentId(this.psqlPool, department_id).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response

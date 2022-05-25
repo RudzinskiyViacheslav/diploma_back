@@ -119,7 +119,7 @@ class ProductionCardHandlers {
     price
   ) => {
     let query = new Promise((resolve, reject) => {
-      console.log(equipment_department_id);
+      // console.log(equipment_department_id);
       pool.query(
         this.PSQLCreateCard,
         [
@@ -157,7 +157,7 @@ class ProductionCardHandlers {
     price,
     equipment_id
   ) => {
-    console.log(equipment_id);
+    // console.log(equipment_id);
     let query = new Promise((resolve, reject) => {
       // console.log(equipment_department_id);
       pool.query(
@@ -244,7 +244,7 @@ class ProductionCardHandlers {
   };
 
   updateHandler = (request, response) => {
-    console.log(request.body);
+    // console.log(request.body);
 
     // console.log("dasdsa")
     this.updateCardId(
@@ -282,7 +282,7 @@ class ProductionCardHandlers {
       price
     ).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else response.status(404).json(`Не получилось добавить запись`);
       },
@@ -315,7 +315,7 @@ class ProductionCardHandlers {
       equipment_id
     ).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else response.status(404).json(`Не получилось обновить запись`);
       },
@@ -329,7 +329,7 @@ class ProductionCardHandlers {
   deleteByCardId = (request, response, equipment_id) => {
     this.deleteProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response
@@ -346,7 +346,7 @@ class ProductionCardHandlers {
   searchByCardId = (request, response, equipment_id) => {
     this.searchProdCardByCardId(this.psqlPool, equipment_id).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response
@@ -366,7 +366,7 @@ class ProductionCardHandlers {
       equipment_department_id
     ).then(
       (result) => {
-        console.log(result);
+        // console.log(result);
         if (result.length !== 0) response.status(200).json(result);
         else
           response

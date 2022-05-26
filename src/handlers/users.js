@@ -207,7 +207,7 @@ class UserHandlers {
             console.log("cookie exists", cookie);
           }
           response.status(200).json(result);
-        } else response.status(500).json(`Неверный логин или пароль`);
+        } else response.status(204).json(`Неверный логин или пароль`);
       },
       (error) => {
         response.status(500);
@@ -220,7 +220,7 @@ class UserHandlers {
     let query = new Promise((resolve, reject) => {
       pool.query(this.PSQLSearchUser, [email, password], (error, results) => {
         if (error) {
-          console.log(error);
+          // console.log(error);
           reject(error);
         }
         if (results) resolve(results.rows);
